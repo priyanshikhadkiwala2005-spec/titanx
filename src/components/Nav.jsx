@@ -5,7 +5,7 @@ const LINKS = [
   ['Token', '#token'],
   ['How to Join', '#join'],
   ['Staking', '#staking'],
-  ['Income', '#income'],
+  ['Ecosystem', '#ecosystem'],
   ['FAQ', '#faq'],
 ];
 

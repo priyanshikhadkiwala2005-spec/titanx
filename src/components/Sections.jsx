@@ -387,11 +387,11 @@ export function Developers() {
 
 /* ---------- income categories (horizontal scroll) ---------- */
 const INCOMES = [
-  ['ROI', 'Staking Rewards (ROI)', 'Participate in the staking ecosystem through the available staking options. Staking rewards are associated with the selected staking mechanism and applicable contract conditions.', [['Plans', 'Flexi · Regular'], ['Governed by', 'Smart contract']]],
-  ['DIRECT', 'Direct Income', 'The direct referral mechanism recognises community participation through referral connections, according to the defined smart-contract structure.', [['Based on', 'Referrals'], ['Governed by', 'Smart contract']]],
-  ['RANK', 'Rank Income', 'The rank-based system recognises team development and community contribution. Rank eligibility is determined according to the project’s team-business structure.', [['Based on', 'Team development'], ['Governed by', 'Smart contract']]],
-  ['UNITY', 'Unity Income', 'The Unity Income mechanism is associated with team participation and rank-based eligibility. Its operation follows the applicable smart-contract rules.', [['Based on', 'Team & rank'], ['Governed by', 'Smart contract']]],
-  ['SINGLE-LEG', 'Single-Leg Income', 'The Single-Leg Income mechanism connects members through an upline and downline network. Its distribution follows the defined smart-contract structure.', [['Based on', 'Network'], ['Governed by', 'Smart contract']]],
+  ['NETWORK', 'Decentralised Network', 'TitanX is built around decentralised smart-contract technology, so project rules are managed through the contract rather than manual control.', [['Focus', 'Decentralisation'], ['Managed by', 'Smart contract']]],
+  ['TRANSPARENCY', 'Token Transparency', 'Token supply, minting and burning information is made publicly visible, supporting an open and understandable token model.', [['Focus', 'Open information'], ['Visible', 'Supply · Mint · Burn']]],
+  ['CONTRACTS', 'Smart Contracts', 'Joining, staking and applicable distribution mechanisms operate automatically according to predefined contract conditions.', [['Focus', 'Automation'], ['Rules', 'Predefined']]],
+  ['WALLETS', 'Wallet Integration', 'Members can interact with the ecosystem through compatible Web3 wallets such as Trust Wallet, TokenPocket, SafePal and MetaMask.', [['Focus', 'Easy access'], ['Access via', 'Web3 wallet']]],
+  ['COMMUNITY', 'Community Participation', 'A referral-based ecosystem designed to encourage community engagement, connections and long-term participation.', [['Focus', 'Engagement'], ['Built on', 'Referral connections']]],
 ];
 function spark(seed) {
   const p = [];
@@ -429,13 +429,13 @@ export function Regions() {
     };
   }, []);
   return (
-    <section className="hz" id="income" ref={ref} data-progress aria-label="Income Opportunities">
+    <section className="hz" id="ecosystem" ref={ref} data-progress aria-label="Ecosystem Features">
       <div className="hz-stick">
         <div className="wrap">
           <div className="sec-head" style={{ marginBottom: 0 }}>
-            <span className="eyebrow">Income Opportunities</span>
-            <h2>Explore the TitanX Income Ecosystem</h2>
-            <p>TitanX includes different income categories designed around staking participation, referrals, team development and community engagement. All applicable mechanisms operate according to the smart-contract rules.</p>
+            <span className="eyebrow">Ecosystem Features</span>
+            <h2>Explore the TitanX Ecosystem</h2>
+            <p>TitanX brings together decentralised technology, transparent token mechanisms, smart-contract automation and community participation in one connected ecosystem.</p>
           </div>
         </div>
         <div className="hz-track" ref={trackRef}>
@@ -461,10 +461,10 @@ export function Regions() {
         <div className="mob-swipe-hint">
           <span>👈 Swipe</span>
           <span className="dot" />
-          <span>Income Categories 👉</span>
+          <span>Ecosystem Features 👉</span>
         </div>
         <div className="wrap">
-          <div className="hz-progress"><span>ROI</span><i /><span>SINGLE-LEG</span></div>
+          <div className="hz-progress"><span>NETWORK</span><i /><span>COMMUNITY</span></div>
         </div>
       </div>
     </section>
@@ -758,7 +758,7 @@ export function CTA() {
 export function Footer() {
   const cols = [
     ['Explore', [['Home', '#top'], ['About TitanX', '#overview'], ['Token Ecosystem', '#token']]],
-    ['Ecosystem', [['Staking', '#staking'], ['Income Opportunities', '#income'], ['Referral Programme', '#direct']]],
+    ['Ecosystem', [['Staking', '#staking'], ['Ecosystem Features', '#ecosystem'], ['Referral Programme', '#direct']]],
     ['More', [['Smart Contract', '#contract'], ['Wallets', '#wallets'], ['FAQ', '#faq']]],
   ];
   return (
