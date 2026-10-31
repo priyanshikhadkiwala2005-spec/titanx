@@ -1,6 +1,6 @@
-# TitanX — Edge Cloud Landing Page
+# TitanX — Rule the Digital Era
 
-React + Vite + Three.js landing page concept with a loader, a 3D globe hero and a different scroll animation in every section. TitanX is a fictional brand made for design showcase use.
+React + Vite landing page for TitanX, a 100% decentralised token with staking and a referral programme. Loader, hero video and a different scroll animation in every section.
 
 ## Run it
 
@@ -28,14 +28,18 @@ src/
     Nav.jsx              sticky blur nav + mobile menu
     Interactive.jsx      CountUp, Tilt (3D card), Magnetic (button)
     Icons.jsx            logo and icon set
-    Sections.jsx         Marquee, Features, Pipeline, Stats, Regions,
-                         Developers, Voices, CTA, Footer
+    Sections.jsx         Marquee (key features), Features (overview & vision),
+                         Stats (token details), Pipeline (joining steps),
+                         AccountRules, Developers (price rate), Regions
+                         (five income types), Staking, DirectIncome,
+                         RankIncome, UnityIncome, Voices (single-leg income),
+                         CTA (thank you), Footer
 ```
 
 ## Customising
 
 - **Colours and fonts:** edit the tokens in the `:root` block at the top of `src/styles.css` (`--blue`, `--cyan`, `--lime`, `--grad`, `--f-display`, …).
-- **Content:** every section keeps its text in a constant at the top of its component (`FEATURES`, `STEPS`, `STATS`, `REGIONS`, `PLANS`, `QUOTES`).
+- **Content:** every section keeps its text in a constant at the top of its component (`OVERVIEW`, `STATS`, `TOKEN_ROWS`, `STEPS`, `RULES`, `PRICE_POINTS`, `INCOMES`, `LEVELS`, `RANK_NAMES`, `LEG`).
 - **Scroll reveals:** add `data-reveal="up|left|right|zoom|flip|blur|rise"` to any element. Add `style={{'--d':'.2s'}}` for a delay.
 - **Scroll-driven sections:** add `data-progress` to a tall section; it receives a CSS variable `--p` from 0 to 1 as you scroll through it.
 - **Loader duration:** `dur` in `src/components/Loader.jsx`.

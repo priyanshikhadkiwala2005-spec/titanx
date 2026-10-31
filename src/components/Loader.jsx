@@ -11,7 +11,7 @@ export default function Loader({ onDone }) {
     let raf;
     let timer;
     const start = performance.now();
-    const dur = REDUCE ? 300 : 2300;
+    const dur = REDUCE ? 300 : 2600;
     const tick = (t) => {
       const k = Math.min(1, (t - start) / dur);
       setN(Math.round((1 - Math.pow(1 - k, 3)) * 100));
@@ -20,7 +20,7 @@ export default function Loader({ onDone }) {
         timer = setTimeout(() => {
           setOut(true);
           doneRef.current();
-        }, 220);
+        }, 300);
     };
     raf = requestAnimationFrame(tick);
     return () => {
@@ -30,42 +30,31 @@ export default function Loader({ onDone }) {
   }, []);
 
   const msg =
-    n < 34 ? 'Locating nearest edge' : n < 68 ? 'Warming 310 cities' : n < 100 ? 'Routing first request' : 'Online';
+    n < 34 ? 'Loading TitanX' : n < 68 ? 'Preparing ecosystem' : n < 100 ? 'Rule the Digital Era' : 'Ready';
 
   return (
-    <div className={'loader' + (out ? ' out' : '')} role="status" aria-label="Loading">
-      <div className="ld-core">
-        <svg className="ld-svg" viewBox="0 0 200 200" fill="none">
-          <defs>
-            <linearGradient id="ldg" x1="0" y1="0" x2="200" y2="200">
-              <stop offset="0" stopColor="#1f7bff" />
-              <stop offset=".5" stopColor="#27d6f5" />
-              <stop offset="1" stopColor="#9af03c" />
-            </linearGradient>
-          </defs>
-          <circle cx="100" cy="100" r="92" stroke="rgba(120,175,255,.12)" strokeWidth="1" />
-          <g className="r1">
-            <circle cx="100" cy="100" r="92" stroke="url(#ldg)" strokeWidth="2.5" strokeLinecap="round" strokeDasharray="120 460" />
-          </g>
-          <g className="r2">
-            <ellipse cx="100" cy="100" rx="78" ry="30" stroke="#27d6f5" strokeWidth="1.2" opacity=".6" />
-            <circle cx="178" cy="100" r="4" fill="#9af03c" />
-          </g>
-          <g className="r3">
-            <circle cx="100" cy="100" r="64" stroke="rgba(154,240,60,.5)" strokeWidth="1" strokeDasharray="2 8" />
-          </g>
-        </svg>
-        <img className="ld-logo" src="/images/Titanx.jpeg" alt="TitanX" />
-      </div>
-      <div className="ld-num">{String(n).padStart(3, '0')}</div>
-      <div className="ld-word">
-        {'TITANX'.split('').map((c, i) => (
-          <span key={i} style={{ '--i': i }}>{c}</span>
-        ))}
-      </div>
-      <div className="ld-status">{msg}</div>
-      <div className="ld-bar">
-        <i style={{ transform: `scaleX(${n / 100})` }} />
+    <div className={'loader ld2' + (out ? ' out' : '')} role="status" aria-label="Loading">
+      <div className="ld2-panel top" />
+      <div className="ld2-panel bot" />
+      <div className="ld2-stage">
+        <div className="ld2-frame">
+          <i className="c tl" /><i className="c tr" /><i className="c bl" /><i className="c br" />
+          <svg className="ld2-trace" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <rect x="1" y="1" width="98" height="98" rx="4" pathLength="100" style={{ strokeDashoffset: 100 - n }} />
+          </svg>
+          <img className="ld2-img dim" src="/images/Titanx.jpeg" alt="" />
+          <img className="ld2-img lit" src="/images/Titanx.jpeg" alt="TitanX" style={{ clipPath: `inset(${100 - n}% 0 0 0)` }} />
+          <span className="ld2-scan" style={{ bottom: `${n}%`, opacity: n > 0 && n < 100 ? 1 : 0 }} />
+        </div>
+        <div className="ld2-word">
+          {'TITANX'.split('').map((c, i) => (
+            <span key={i} style={{ '--i': i }}>{c}</span>
+          ))}
+        </div>
+        <div className="ld2-meta">
+          <span className="ld2-status">{msg}</span>
+          <span className="ld2-num">{String(n).padStart(3, '0')}</span>
+        </div>
       </div>
     </div>
   );

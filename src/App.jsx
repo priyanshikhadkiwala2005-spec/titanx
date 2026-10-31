@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import Loader from './components/Loader';
 import Nav from './components/Nav';
 import Hero from './components/Hero';
-import { Marquee, Features, Pipeline, Stats, Regions, Developers, Voices, CTA, Footer } from './components/Sections';
+import { Marquee, Features, Pipeline, SmartContract, Wallets, Faq, Stats, Regions, DirectIncome, Staking, RankIncome, UnityIncome, Developers, Voices, CTA, Footer } from './components/Sections';
 import { REDUCE, clamp } from './lib/utils';
 
 export default function App() {
@@ -104,11 +104,18 @@ export default function App() {
         <Hero />
         <Marquee />
         <Features />
-        <Pipeline />
         <Stats />
+        <Pipeline />
+        <Staking />
         <Regions />
-        <Developers />
+        <DirectIncome />
+        <RankIncome />
+        <UnityIncome />
         <Voices />
+        <Developers />
+        <SmartContract />
+        <Wallets />
+        <Faq />
         <CTA />
       </main>
       <Footer />
@@ -117,11 +124,11 @@ export default function App() {
         <div className="mob-bar-inner">
           <div className="mob-bar-info">
             <span className="dot" />
-            <b>310 PoPs</b>
+            <b>TITANX</b>
             <span className="sep">·</span>
-            <span>p50 9ms</span>
+            <span>Rule the Digital Era</span>
           </div>
-          <a href="#start" className="btn btn-primary btn-sm">Deploy ➔</a>
+          <a href="#join" className="btn btn-primary btn-sm">Join ➔</a>
         </div>
       </aside>
     </>

@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 
 const LINKS = [
-  ['Platform', '#platform'],
-  ['How it works', '#pipeline'],
-  ['Network', '#network'],
-  ['Developers', '#developers'],
+  ['About', '#overview'],
+  ['Token', '#token'],
+  ['How to Join', '#join'],
+  ['Staking', '#staking'],
+  ['Income', '#income'],
+  ['FAQ', '#faq'],
 ];
 
 export default function Nav() {
@@ -26,7 +28,7 @@ export default function Nav() {
           {LINKS.map(([t, h]) => <a key={h} href={h}>{t}</a>)}
         </nav>
         <div className="nav-cta">
-          <a href="#start" className="btn btn-primary btn-sm">Sign in</a>
+          <a href="#join" className="btn btn-primary btn-sm">Join Now</a>
           <button className="burger" aria-label="Menu" aria-expanded={open} onClick={() => setOpen(!open)}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
               {open ? <path d="M6 6l12 12M18 6L6 18" /> : <path d="M4 7h16M4 12h16M4 17h10" />}
@@ -37,7 +39,7 @@ export default function Nav() {
       <div className={'mob-menu' + (open ? ' open' : '')}>
         {LINKS.map(([t, h]) => <a key={h} href={h} onClick={() => setOpen(false)}>{t}</a>)}
         <div className="mob-cta">
-          <a href="#start" className="btn btn-primary" onClick={() => setOpen(false)}>Sign in</a>
+          <a href="#join" className="btn btn-primary" onClick={() => setOpen(false)}>Join Now</a>
         </div>
       </div>
     </header>

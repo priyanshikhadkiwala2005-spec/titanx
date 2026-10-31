@@ -1,47 +1,71 @@
 import { useEffect, useRef, useState } from 'react';
 import { Arrow, Check, Icon } from './Icons';
-import { CountUp, Magnetic, Tilt } from './Interactive';
+import { Magnetic, Tilt } from './Interactive';
 import { REDUCE, clamp, useInView } from '../lib/utils';
 
-/* ---------- logo marquee ---------- */
+/* ---------- shared: content table ---------- */
+function DataTable({ head, rows, align, foot, caption }) {
+  return (
+    <div className="tx-table-wrap" data-reveal="up">
+      <table className="tx-table">
+        {caption ? <caption>{caption}</caption> : null}
+        <thead>
+          <tr>{head.map((h, k) => <th key={k} className={align && align[k] === 'r' ? 'r' : ''}>{h}</th>)}</tr>
+        </thead>
+        <tbody>
+          {rows.map((r, i) => (
+            <tr key={i}>
+              {r.map((c, k) => (k === 0 ? <th scope="row" key={k}>{c}</th> : <td key={k} className={align && align[k] === 'r' ? 'r' : ''}>{c}</td>))}
+            </tr>
+          ))}
+        </tbody>
+        {foot ? (
+          <tfoot>
+            <tr>{foot.map((c, k) => (k === 0 ? <th scope="row" key={k}>{c}</th> : <td key={k} className={align && align[k] === 'r' ? 'r' : ''}>{c}</td>))}</tr>
+          </tfoot>
+        ) : null}
+      </table>
+    </div>
+  );
+}
+
+/* ---------- key features marquee ---------- */
 export function Marquee() {
-  const a = ['Northwind Labs', 'Kestrel Pay', 'Quanta Health', 'Lumio', 'Brightfold', 'Vantage Rail', 'Halcyon Studio', 'Meridian Games'];
-  const b = ['Paperplane', 'Solace Bank', 'Atlas Freight', 'Nimbus Learn', 'Copperleaf', 'Driftwood Media', 'Pulsefit', 'Lattice AI'];
+  const a = ['Decentralised Smart Contract', 'Transparent Token Burning', 'Staking Opportunities', 'Referral Programme'];
+  const b = ['Flexi & Regular Staking', 'Income Categories', 'Rank Recognition', 'Public Transparency', 'Withdrawals in Tokens', 'Compatible Web3 Wallets'];
   const row = (arr, rev) => (
     <div className={'mq-row' + (rev ? ' rev' : '')}>
-      {[...arr, ...arr].map((n, k) => <span key={k}>{n}</span>)}
+      {[...arr, ...arr, ...arr].map((n, k) => <span key={k}>{n}</span>)}
     </div>
   );
   return (
-    <section className="marquee" aria-label="Teams on TitanX">
-      <div className="mq-label">Trusted by 40,000+ engineering teams</div>
+    <section className="marquee" aria-label="TitanX key features">
+      <div className="mq-label">TitanX · Rule the Digital Era</div>
       {row(a)}
       {row(b, true)}
     </section>
   );
 }
 
-/* ---------- features ---------- */
-const FEATURES = [
-  ['fn', 'Edge Functions', 'Write TypeScript, Go or Rust. Cold starts under 5 ms because isolates boot instead of containers.', '< 5 ms cold start'],
-  ['kv', 'Global KV', 'A key-value store replicated to every city. Reads are local, writes reach the world in under a second.', '~800 ms global sync'],
-  ['roll', 'Instant Rollbacks', 'Every deploy is immutable. Roll back to any version with one click and no rebuild.', '1-click, 0 rebuilds'],
-  ['shield', 'Zero-trust Network', 'mTLS between every hop, DDoS absorption at the edge, and a WAF you configure in code.', '120 Tbps capacity'],
-  ['img', 'Image Pipeline', 'Resize, crop and convert to AVIF on the fly, cached next to the person viewing it.', '-63% avg bytes'],
-  ['eye', 'Live Observability', 'Traces, logs and per-city latency maps that stream in real time from every request.', '1 s log delay'],
+/* ---------- about, vision & mission ---------- */
+const OVERVIEW = [
+  ['fn', 'Decentralised Ecosystem', 'Built around smart-contract technology, with project rules managed through the contract.', 'Smart-contract rules'],
+  ['token', 'Transparent Token Model', 'Token creation, participation and burning are based on the smart-contract mechanism.', 'Open mechanism'],
+  ['stake', 'Staking Opportunities', 'Members can participate in staking through the available Flexi and Regular options.', 'Flexi · Regular'],
+  ['users', 'Community Participation', 'A referral-based ecosystem designed to encourage community engagement and network development.', 'Referral-based'],
 ];
 
 export function Features() {
   return (
-    <section className="sec" id="platform">
+    <section className="sec" id="overview">
       <div className="wrap">
         <div className="sec-head" data-reveal="blur">
-          <span className="eyebrow">Platform</span>
-          <h2>Everything your app needs, already at the edge</h2>
-          <p>Compute, storage and security run in the same 310 cities, so nothing has to cross an ocean to answer a request.</p>
+          <span className="eyebrow">About TitanX</span>
+          <h2>Discover the TitanX Ecosystem</h2>
+          <p>TitanX is a decentralised token project built around smart-contract technology. It brings together token participation, staking opportunities, community referrals and a structured income ecosystem. The project focuses on transparency, decentralisation and community-driven participation.</p>
         </div>
-        <div className="feat-grid">
-          {FEATURES.map((x, k) => (
+        <div className="feat-grid f4">
+          {OVERVIEW.map((x, k) => (
             <div key={k} data-reveal={k % 2 ? 'up' : 'flip'} style={{ '--d': (k % 3) * 0.12 + 's' }}>
               <Tilt>
                 <div className="ficon"><Icon k={x[0]} /></div>
@@ -52,17 +76,77 @@ export function Features() {
             </div>
           ))}
         </div>
+        <div className="vm-grid">
+          <div data-reveal="left">
+            <Tilt>
+              <div className="ficon"><Icon k="vision" /></div>
+              <h3>Our Vision</h3>
+              <p>To build a transparent and decentralised token community where members can participate in a smart-contract-driven digital ecosystem.</p>
+            </Tilt>
+          </div>
+          <div data-reveal="right" style={{ '--d': '.12s' }}>
+            <Tilt>
+              <div className="ficon"><Icon k="target" /></div>
+              <h3>Our Mission</h3>
+              <p>To create an accessible ecosystem that brings together decentralised technology, token participation, staking and community engagement. We aim to encourage transparency, trust and long-term community participation through smart-contract-based operations.</p>
+            </Tilt>
+          </div>
+        </div>
       </div>
     </section>
   );
 }
 
-/* ---------- pipeline (sticky, scroll-driven) ---------- */
+/* ---------- token ecosystem ---------- */
+const STATS = [
+  ['Decentralised', 'Operates through a decentralised smart contract', 0.9],
+  ['No Open Buy', 'The ecosystem does not provide an open token-buying mechanism', 0.7],
+  ['Transparent', 'Token supply, minting and burning information is publicly visible', 0.8],
+  ['In Tokens', 'Withdrawals are processed in tokens under smart-contract rules', 0.6],
+];
+
+const TOKEN_ROWS = [
+  ['Token Creation', 'Tokens are created through the joining process according to the smart-contract mechanism.'],
+  ['No Open Buy', 'The ecosystem does not provide an open token-buying mechanism.'],
+  ['Joining Mechanism', 'Members can participate using USDT or supported tokens.'],
+  ['Token Withdrawal', 'Withdrawals are processed in tokens according to the applicable smart-contract rules.'],
+  ['Transparent Burning', "The token-burning mechanism is designed to support the ecosystem's supply-management model."],
+  ['Public Transparency', 'Token supply, minting and burning information is made publicly visible through the ecosystem.'],
+];
+
+export function Stats() {
+  return (
+    <section className="sec" id="token">
+      <div className="wrap">
+        <div className="sec-head" data-reveal="left">
+          <span className="eyebrow">Token Ecosystem</span>
+          <h2>Understanding the TitanX Token</h2>
+          <p>The TitanX token operates through a decentralised smart contract. Its creation, participation and burning mechanisms follow the rules defined within the contract.</p>
+        </div>
+        <div className="stats" data-reveal="zoom">
+          {STATS.map((x, k) => (
+            <div className="stat in" key={k} style={{ '--w': x[2] }}>
+              <div className="v txt">{x[0]}</div>
+              <div className="l">{x[1]}</div>
+              <div className="bar"><i /></div>
+            </div>
+          ))}
+        </div>
+        <div className="tx-block">
+          <DataTable head={['Topic', 'Details']} rows={TOKEN_ROWS} />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- how to join: joining process (sticky, scroll-driven) ---------- */
 const STEPS = [
-  ['git push', 'Connect a repository. Every push to a branch starts a deploy.', '01', 'Push'],
-  ['Build in 9 seconds', 'A remote cache reuses unchanged layers, so most builds finish before your coffee cools.', '9s', 'Build'],
-  ['Replicate to 310 cities', 'The build is signed and copied to every edge location over our private backbone.', '310', 'Replicate'],
-  ['Serve in 18 ms', 'Traffic shifts to the new version city by city, with automatic rollback on errors.', '18ms', 'Serve'],
+  ['Create Your Wallet', 'Set up a compatible digital wallet such as Trust Wallet, TokenPocket, SafePal or MetaMask.', 'Web3', 'Wallet'],
+  ['Connect Through Referral', 'Access the TitanX ecosystem using a valid referral link.', 'Link', 'Connect'],
+  ['Join the Ecosystem', 'Participate through the available joining mechanism using supported payment options.', 'Join', 'Join'],
+  ['Choose Your Staking Option', 'Explore the available Flexi and Regular staking options.', 'Stake', 'Stake'],
+  ['Activate Your TitanX ID', 'Complete the required staking process to activate your TitanX ID according to the smart-contract rules.', 'ID', 'Activate'],
 ];
 
 export function Pipeline() {
@@ -78,18 +162,20 @@ export function Pipeline() {
   const ticks = [];
   for (let i = 0; i < 60; i++) {
     const a = (i / 60) * Math.PI * 2;
-    const major = i % 15 === 0;
+    const major = i % 12 === 0;
     ticks.push(
       <line key={i} x1={100 + Math.cos(a) * 99} y1={100 + Math.sin(a) * 99} x2={100 + Math.cos(a) * (major ? 92 : 96)} y2={100 + Math.sin(a) * (major ? 92 : 96)} strokeWidth={major ? 1.5 : 0.6} />
     );
   }
+  const total = String(STEPS.length).padStart(2, '0');
   return (
-    <section className="pipe" id="pipeline" data-progress data-steps="4">
+    <section className="pipe pipe-5" id="join" data-progress data-steps={STEPS.length}>
       <div className="pipe-stick">
         <div className="wrap">
           <div className="sec-head pipe-head">
-            <span className="eyebrow">How it works</span>
-            <h2>From commit to every continent in under a minute</h2>
+            <span className="eyebrow">How to Join TitanX</span>
+            <h2>Start Your TitanX Journey</h2>
+            <p>Getting started with TitanX involves connecting a compatible Web3 wallet and following the ecosystem's joining and staking process.</p>
           </div>
           <div className="ring">
             <svg viewBox="0 0 200 200" fill="none">
@@ -106,7 +192,7 @@ export function Pipeline() {
             </svg>
             <div className="ring-center">
               {STEPS.map((s, k) => (
-                <div key={k}><span className="big grad-text">{s[2]}</span><span className="cap">{s[3]}</span></div>
+                <div key={k}><span className="big grad-text">{s[2]}</span><span className="cap">Step 0{k + 1} · {s[3]}</span></div>
               ))}
             </div>
           </div>
@@ -135,7 +221,7 @@ export function Pipeline() {
             </div>
             <div className="mob-pipe-card">
               <div className="mob-pipe-card-top">
-                <span className="mob-pipe-badge">STAGE 0{mobStep + 1} OF 04</span>
+                <span className="mob-pipe-badge">STEP 0{mobStep + 1} OF {total}</span>
                 <span className="mob-pipe-val grad-text">{STEPS[mobStep][2]}</span>
               </div>
               <h3>{STEPS[mobStep][0]}</h3>
@@ -151,29 +237,31 @@ export function Pipeline() {
   );
 }
 
-/* ---------- stats ---------- */
-const STATS = [
-  [310, 0, '', 'Edge cities in 120 countries', 0.92],
-  [18, 0, 'ms', 'Median global response time', 0.82],
-  [99.995, 3, '%', 'Uptime over the last 12 months', 0.99],
-  [120, 0, 'Tbps', 'Network capacity for traffic spikes', 0.75],
+/* ---------- smart contract & transparency ---------- */
+const CONTRACT = [
+  ['fn', 'Decentralised Operations', 'The ecosystem follows predefined smart-contract rules.'],
+  ['eye', 'Transparent Mechanisms', 'Applicable token and ecosystem information is made visible to participants.'],
+  ['roll', 'Automated Processes', 'Joining, staking and applicable distribution mechanisms operate according to contract conditions.'],
+  ['users', 'Community Participation', 'Members can interact with the ecosystem through compatible digital wallets.'],
 ];
 
-export function Stats() {
+export function SmartContract() {
   return (
-    <section className="sec" id="network">
+    <section className="sec sec-tight" id="contract">
       <div className="wrap">
-        <div className="sec-head" data-reveal="left">
-          <span className="eyebrow">Network</span>
-          <h2>A backbone built for the speed of light</h2>
-          <p>We run our own fibre between regions, so your traffic never waits in a public internet queue.</p>
+        <div className="sec-head" data-reveal="blur">
+          <span className="eyebrow">Smart Contract &amp; Transparency</span>
+          <h2>Powered by Smart Contract Technology</h2>
+          <p>TitanX is built around decentralised smart-contract technology, providing a structured mechanism for token participation, staking, referrals and income distribution.</p>
         </div>
-        <div className="stats" data-reveal="zoom">
-          {STATS.map((x, k) => (
-            <div className="stat in" key={k} style={{ '--w': x[4] }}>
-              <div className="v"><CountUp to={x[0]} dec={x[1]} suffix={x[2]} /></div>
-              <div className="l">{x[3]}</div>
-              <div className="bar"><i /></div>
+        <div className="feat-grid f4">
+          {CONTRACT.map((x, k) => (
+            <div key={k} data-reveal={k % 2 ? 'up' : 'flip'} style={{ '--d': k * 0.12 + 's' }}>
+              <Tilt>
+                <div className="ficon"><Icon k={x[0]} /></div>
+                <h3>{x[1]}</h3>
+                <p>{x[2]}</p>
+              </Tilt>
             </div>
           ))}
         </div>
@@ -182,11 +270,128 @@ export function Stats() {
   );
 }
 
-/* ---------- regions (horizontal scroll) ---------- */
-const REGIONS = [
-  ['BOM', 'Mumbai', 'India', 9, 41], ['FRA', 'Frankfurt', 'Germany', 11, 58], ['GRU', 'São Paulo', 'Brazil', 14, 33],
-  ['NRT', 'Tokyo', 'Japan', 8, 62], ['IAD', 'Ashburn', 'United States', 7, 74], ['SYD', 'Sydney', 'Australia', 12, 29],
-  ['JNB', 'Johannesburg', 'South Africa', 15, 22], ['SIN', 'Singapore', 'Singapore', 6, 47], ['DXB', 'Dubai', 'UAE', 10, 26],
+/* ---------- supported wallets ---------- */
+const WALLETS = ['Trust Wallet', 'TokenPocket', 'SafePal', 'MetaMask'];
+
+export function Wallets() {
+  return (
+    <section className="sec sec-tight" id="wallets">
+      <div className="wrap">
+        <div className="sec-head" data-reveal="blur">
+          <span className="eyebrow">Supported Wallets</span>
+          <h2>Connect Your Digital Wallet</h2>
+          <p>Access the TitanX ecosystem using a compatible Web3 wallet. Supported wallet options mentioned in the project material include:</p>
+        </div>
+        <div className="rule-grid cols-4">
+          {WALLETS.map((w, k) => (
+            <div className="rule" key={k} data-reveal="up" style={{ '--d': k * 0.1 + 's' }}>
+              <span className="rule-k">Wallet</span>
+              <b className="rule-v">{w}</b>
+            </div>
+          ))}
+        </div>
+        <p className="tx-foot-note" data-reveal="up">Connect your compatible wallet and explore the TitanX decentralised ecosystem.</p>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- token burning + typing terminal ---------- */
+const TERM = [
+  [['c', '# TitanX token burning']],
+  [['g', '$ '], ['', 'burning     '], ['y', 'smart contract']],
+  [['b', '▸ '], ['', 'rules       '], ['y', 'predefined']],
+  [['b', '▸ '], ['', 'records     '], ['y', 'public']],
+  [['b', '▸ '], ['', 'management  '], ['y', 'decentralised']],
+  [['g', '✓ '], ['', 'minting, supply & burning → '], ['b', 'visible']],
+  [['g', '✓ '], ['', 'no manual intervention']],
+];
+const TERM_TOTAL = TERM.reduce((s, l) => s + l.reduce((a, p) => a + p[1].length, 0) + 1, 0);
+
+function Terminal() {
+  const ref = useRef(null);
+  const seen = useInView(ref, { threshold: 0.4 });
+  const [n, setN] = useState(REDUCE ? TERM_TOTAL : 0);
+  useEffect(() => {
+    if (!seen || REDUCE) return;
+    let k = 0;
+    const id = setInterval(() => {
+      k += 2;
+      setN(k);
+      if (k >= TERM_TOTAL) clearInterval(id);
+    }, 18);
+    return () => clearInterval(id);
+  }, [seen]);
+
+  let left = n;
+  const out = [];
+  TERM.forEach((line, li) => {
+    if (left <= 0) return;
+    const parts = [];
+    line.forEach((p, pi) => {
+      if (left <= 0) return;
+      parts.push(<span key={pi} className={p[0]}>{p[1].slice(0, left)}</span>);
+      left -= p[1].length;
+    });
+    left -= 1;
+    out.push(<span key={li}>{parts}{'\n'}</span>);
+  });
+
+  return (
+    <div className="term" ref={ref} data-reveal="right">
+      <div className="term-top"><i /><i /><i /><span>titanx — token burning</span></div>
+      <pre>{out}<span className="caret" /></pre>
+    </div>
+  );
+}
+
+const BURN_POINTS = [
+  ['How It Works', ['The token-burning mechanism operates through the smart contract.', 'Tokens are burned according to the applicable smart-contract rules during the defined selling process.']],
+  ['Transparent Records', ['Token minting, total supply and burning information are made publicly visible.']],
+  ['Decentralised Management', ['The burning mechanism follows the predefined contract rules rather than manual intervention.']],
+];
+
+export function Developers() {
+  return (
+    <section className="sec" id="burning">
+      <div className="wrap dev">
+        <div data-reveal="left">
+          <div className="sec-head" style={{ marginBottom: 0 }}>
+            <span className="eyebrow">Token Burning Mechanism</span>
+            <h2>Transparent Token Burning</h2>
+            <p>TitanX incorporates a token-burning mechanism as part of its token ecosystem.</p>
+          </div>
+          <ul className="dev-list">
+            {BURN_POINTS.map((p, k) => (
+              <li key={k}>
+                <Check />
+                <span className="dev-item">
+                  <b>{p[0]}</b>
+                  {p[1].map((t) => <span key={t}>{t}</span>)}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <Terminal />
+      </div>
+      <div className="wrap">
+        <div className="tx-note tx-gap" data-reveal="up">
+          <span className="eyebrow">Transparency</span>
+          <p>Transparency and smart-contract-based operations remain important elements of the TitanX ecosystem.</p>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- income categories (horizontal scroll) ---------- */
+const INCOMES = [
+  ['ROI', 'Staking Rewards (ROI)', 'Participate in the staking ecosystem through the available staking options. Staking rewards are associated with the selected staking mechanism and applicable contract conditions.', [['Plans', 'Flexi · Regular'], ['Governed by', 'Smart contract']]],
+  ['DIRECT', 'Direct Income', 'The direct referral mechanism recognises community participation through referral connections, according to the defined smart-contract structure.', [['Based on', 'Referrals'], ['Governed by', 'Smart contract']]],
+  ['RANK', 'Rank Income', 'The rank-based system recognises team development and community contribution. Rank eligibility is determined according to the project’s team-business structure.', [['Based on', 'Team development'], ['Governed by', 'Smart contract']]],
+  ['UNITY', 'Unity Income', 'The Unity Income mechanism is associated with team participation and rank-based eligibility. Its operation follows the applicable smart-contract rules.', [['Based on', 'Team & rank'], ['Governed by', 'Smart contract']]],
+  ['SINGLE-LEG', 'Single-Leg Income', 'The Single-Leg Income mechanism connects members through an upline and downline network. Its distribution follows the defined smart-contract structure.', [['Based on', 'Network'], ['Governed by', 'Smart contract']]],
 ];
 function spark(seed) {
   const p = [];
@@ -224,20 +429,22 @@ export function Regions() {
     };
   }, []);
   return (
-    <section className="hz" ref={ref} data-progress aria-label="Regions">
+    <section className="hz" id="income" ref={ref} data-progress aria-label="Income Opportunities">
       <div className="hz-stick">
         <div className="wrap">
           <div className="sec-head" style={{ marginBottom: 0 }}>
-            <span className="eyebrow">Regions</span>
-            <h2>Close to everyone, everywhere</h2>
+            <span className="eyebrow">Income Opportunities</span>
+            <h2>Explore the TitanX Income Ecosystem</h2>
+            <p>TitanX includes different income categories designed around staking participation, referrals, team development and community engagement. All applicable mechanisms operate according to the smart-contract rules.</p>
           </div>
         </div>
         <div className="hz-track" ref={trackRef}>
-          {REGIONS.map((x, k) => (
+          {INCOMES.map((x, k) => (
             <article className="region" key={k}>
-              <span className="code">{x[0]} · {x[2]}</span>
+              <span className="code">{x[0]}</span>
               <h3>{x[1]}</h3>
-              <svg className="spark" viewBox="0 0 300 44" preserveAspectRatio="none">
+              <p className="region-d">{x[2]}</p>
+              <svg className="spark" viewBox="0 0 300 44" preserveAspectRatio="none" aria-hidden="true">
                 <defs>
                   <linearGradient id={'sp' + k} x1="0" x2="1">
                     <stop offset="0" stopColor="#1f7bff" />
@@ -247,109 +454,160 @@ export function Regions() {
                 </defs>
                 <polyline points={spark(k + 1)} fill="none" stroke={`url(#sp${k})`} strokeWidth="2" />
               </svg>
-              <div className="row"><span>p50 latency</span><b>{x[3]} ms</b></div>
-              <div className="row"><span>Edge nodes</span><b>{x[4]}</b></div>
+              {x[3].map((r) => <div className="row" key={r[0]}><span>{r[0]}</span><b>{r[1]}</b></div>)}
             </article>
           ))}
         </div>
         <div className="mob-swipe-hint">
-          <span>👈 Swipe edge hubs</span>
+          <span>👈 Swipe</span>
           <span className="dot" />
-          <span>9 Global Cities 👉</span>
+          <span>Income Categories 👉</span>
         </div>
         <div className="wrap">
-          <div className="hz-progress"><span>BOM</span><i /><span>DXB</span></div>
+          <div className="hz-progress"><span>ROI</span><i /><span>SINGLE-LEG</span></div>
         </div>
       </div>
     </section>
   );
 }
 
-/* ---------- developers + typing terminal ---------- */
-const TERM = [
-  [['c', '# install the CLI and ship']],
-  [['g', '$ '], ['', 'npm i -g titanx']],
-  [['g', '$ '], ['', 'titanx deploy']],
-  [['b', '▸ '], ['', 'Detected Next.js 15 project']],
-  [['b', '▸ '], ['', 'Build cache hit 87%  '], ['y', '8.6s']],
-  [['b', '▸ '], ['', 'Uploading 214 assets  '], ['y', '1.2s']],
-  [['b', '▸ '], ['', 'Replicating to 310 cities ████████████ '], ['y', '100%']],
-  [['g', '✓ '], ['', 'Live at '], ['b', 'https://shop-7f3a.titanx.app']],
-  [['g', '✓ '], ['', 'p50 '], ['y', '17 ms'], ['', ' · p99 '], ['y', '61 ms']],
+/* ---------- direct referral programme ---------- */
+const DIRECT = [
+  ['Community expansion', 'Invite others to explore the ecosystem.'],
+  ['Referral-based participation', 'Participate through referral connections.'],
+  ['Structured referral connections', 'A structured referral network.'],
+  ['Smart-contract-managed distribution', 'Distribution follows the contract.'],
 ];
-const TERM_TOTAL = TERM.reduce((s, l) => s + l.reduce((a, p) => a + p[1].length, 0) + 1, 0);
 
-function Terminal() {
-  const ref = useRef(null);
-  const seen = useInView(ref, { threshold: 0.4 });
-  const [n, setN] = useState(REDUCE ? TERM_TOTAL : 0);
-  useEffect(() => {
-    if (!seen || REDUCE) return;
-    let k = 0;
-    const id = setInterval(() => {
-      k += 2;
-      setN(k);
-      if (k >= TERM_TOTAL) clearInterval(id);
-    }, 18);
-    return () => clearInterval(id);
-  }, [seen]);
-
-  let left = n;
-  const out = [];
-  TERM.forEach((line, li) => {
-    if (left <= 0) return;
-    const parts = [];
-    line.forEach((p, pi) => {
-      if (left <= 0) return;
-      parts.push(<span key={pi} className={p[0]}>{p[1].slice(0, left)}</span>);
-      left -= p[1].length;
-    });
-    left -= 1;
-    out.push(<span key={li}>{parts}{'\n'}</span>);
-  });
-
+export function DirectIncome() {
   return (
-    <div className="term" ref={ref} data-reveal="right">
-      <div className="term-top"><i /><i /><i /><span>~/shop — titanx</span></div>
-      <pre>{out}<span className="caret" /></pre>
-    </div>
+    <section className="sec sec-tight" id="direct">
+      <div className="wrap">
+        <div className="sec-head" data-reveal="blur">
+          <span className="eyebrow">Direct Referral Programme</span>
+          <h2>Grow Through Community Connections</h2>
+          <p>The TitanX referral programme encourages community participation through direct referrals and a structured referral network. Members can invite others to explore the TitanX ecosystem and participate through their referral connections.</p>
+        </div>
+        <div className="rule-grid cols-4">
+          {DIRECT.map((r, k) => (
+            <div className="rule" key={k} data-reveal="up" style={{ '--d': k * 0.1 + 's' }}>
+              <span className="rule-k">Direct Referral Benefit</span>
+              <b className="rule-v">{r[0]}</b>
+              <span className="rule-d">{r[1]}</span>
+            </div>
+          ))}
+        </div>
+        <p className="tx-foot-note" data-reveal="up">Build meaningful connections and become an active part of the TitanX community.</p>
+      </div>
+    </section>
   );
 }
 
-export function Developers() {
-  const pts = [
-    'Framework presets for Next.js, Astro, Remix, SvelteKit and plain HTML',
-    'Preview URL for every pull request, shareable with your team',
-    'Environment secrets encrypted at rest and injected at runtime',
-    'Local dev server that mirrors the edge runtime exactly',
+/* ---------- staking opportunities ---------- */
+export function Staking() {
+  const cards = [
+    ['roll', 'Flexi Staking', 'The Flexi option provides flexibility in accessing basic capital, subject to the applicable smart-contract conditions.'],
+    ['stake', 'Regular Staking', 'The Regular option is designed for members participating through a structured staking mechanism.'],
+    ['fn', 'Smart Contract Management', 'Staking operations and applicable conditions are managed through the smart contract.'],
   ];
   return (
-    <section className="sec" id="developers">
-      <div className="wrap dev">
-        <div data-reveal="left">
-          <div className="sec-head" style={{ marginBottom: 0 }}>
-            <span className="eyebrow">Developers</span>
-            <h2>One command. Global in 10 seconds.</h2>
-            <p>No regions to choose, no load balancers to configure. The CLI handles builds, caching and rollout.</p>
-          </div>
-          <ul className="dev-list">
-            {pts.map((p, k) => <li key={k}><Check /><span>{p}</span></li>)}
-          </ul>
+    <section className="sec" id="staking">
+      <div className="wrap">
+        <div className="sec-head" data-reveal="left">
+          <span className="eyebrow">Staking Opportunities</span>
+          <h2>Explore Staking Opportunities</h2>
+          <p>TitanX provides staking opportunities through different participation options. Members can explore the available staking mechanisms according to their preferences.</p>
         </div>
-        <Terminal />
+        <div className="feat-grid">
+          {cards.map((x, k) => (
+            <div key={k} data-reveal={k % 2 ? 'up' : 'flip'} style={{ '--d': k * 0.12 + 's' }}>
+              <Tilt>
+                <div className="ficon"><Icon k={x[0]} /></div>
+                <h3>{x[1]}</h3>
+                <p>{x[2]}</p>
+              </Tilt>
+            </div>
+          ))}
+        </div>
+        <div className="tx-note tx-gap" data-reveal="up">
+          <span className="eyebrow">Important Note</span>
+          <p>Staking participation, withdrawals and applicable conditions are subject to the project's smart-contract rules.</p>
+        </div>
       </div>
     </section>
   );
 }
 
-/* ---------- testimonials 3D carousel ---------- */
-const QUOTES = [
-  ['Our checkout page went from 420 ms to 38 ms for customers in Southeast Asia. Conversion rose the same week.', 'Aditi Rao', 'Head of Platform, Kestrel Pay'],
-  ['We deleted three load balancers and a CDN contract. One config file replaced all of it.', 'Marcus Lind', 'CTO, Vantage Rail'],
-  ['Rollbacks used to take twenty minutes. Now it is one click and the old version is live everywhere.', 'Sofia Mendes', 'SRE Lead, Lumio'],
-  ['Preview URLs on every pull request changed how our designers review work.', 'Kenji Watanabe', 'Engineering Manager, Meridian Games'],
-  ['During a launch we hit 2 million requests a minute and nobody on the team got paged.', 'Leila Haddad', 'VP Engineering, Brightfold'],
-  ['The latency map showed us that São Paulo users were our slowest. Fixed in an afternoon.', 'Daniel Okafor', 'Staff Engineer, Quanta Health'],
+/* ---------- rank income + unity income ---------- */
+function RankBlock({ id, eyebrow, title, intro, cards, closing, f4 }) {
+  return (
+    <section className="sec" id={id}>
+      <div className="wrap">
+        <div className="sec-head" data-reveal="blur">
+          <span className="eyebrow">{eyebrow}</span>
+          <h2>{title}</h2>
+          <p>{intro}</p>
+        </div>
+        <div className={'feat-grid' + (f4 ? ' f4' : '')}>
+          {cards.map((x, k) => (
+            <div key={k} data-reveal={k % 2 ? 'up' : 'flip'} style={{ '--d': k * 0.12 + 's' }}>
+              <Tilt>
+                <div className="ficon"><Icon k={x[0]} /></div>
+                <h3>{x[1]}</h3>
+                <p>{x[2]}</p>
+              </Tilt>
+            </div>
+          ))}
+        </div>
+        <p className="tx-foot-note" data-reveal="up">{closing}</p>
+      </div>
+    </section>
+  );
+}
+
+export function RankIncome() {
+  return (
+    <RankBlock
+      id="rank"
+      eyebrow="Rank Income"
+      title="Recognising Team Development"
+      intro="The TitanX rank system is designed to recognise team development, business contribution and community growth. Members progress through different ranks according to the applicable team-business requirements."
+      cards={[
+        ['users', 'Team Structure', 'The rank mechanism considers team development across the A Team and other team groups.'],
+        ['rank', 'Rank Recognition', 'Members become eligible for rank-based income according to their achieved rank and applicable project rules.'],
+        ['swap', 'Automatic Rank Replacement', 'The highest achieved rank determines the applicable rank-income eligibility. Previous rank eligibility is replaced according to the smart-contract mechanism.'],
+      ]}
+      closing="Grow your network, contribute to the community and progress through the TitanX rank ecosystem."
+    />
+  );
+}
+
+export function UnityIncome() {
+  return (
+    <RankBlock
+      id="unity"
+      eyebrow="Unity Income"
+      title="Grow Together with Unity Income"
+      intro="Unity Income is a team-oriented income mechanism connected with rank achievement and team-business participation. It recognises community development and participation across the TitanX ecosystem."
+      f4
+      cards={[
+        ['users', 'Team-Based Participation', 'Unity Income is associated with team-business development and the applicable rank structure.'],
+        ['rank', 'Rank-Based Eligibility', 'Eligibility is determined by the highest achieved rank according to the smart-contract rules.'],
+        ['swap', 'Automatic Replacement', 'Previous rank eligibility is automatically replaced when a higher eligible rank is achieved.'],
+        ['fn', 'Smart Contract Distribution', "The Unity Income mechanism follows the project's defined smart-contract conditions."],
+      ]}
+      closing="Build a stronger community through collaboration, participation and shared growth."
+    />
+  );
+}
+
+/* ---------- single-leg income: 3D carousel ---------- */
+const LEG = [
+  ['The system recognises eligible upline members according to the defined network structure.', 'Upline Participation', '↑'],
+  ["The income distribution mechanism also includes eligible downline members according to the project's rules.", 'Downline Distribution', '↓'],
+  ['The structure encourages active participation and connections throughout the TitanX community.', 'Community Network', '⇄'],
+  ['The highest achieved rank determines eligibility according to the smart-contract mechanism.', 'Automatic Replacement', '↻'],
+  ['It connects members through a network-based distribution mechanism managed by the smart contract.', 'Smart Contract Managed', '◆'],
 ];
 
 export function Voices() {
@@ -361,8 +619,8 @@ export function Voices() {
     const id = setInterval(() => { if (!paused.current) setI((v) => v + 1); }, 4200);
     return () => clearInterval(id);
   }, []);
-  const step = 360 / QUOTES.length;
-  const front = ((i % QUOTES.length) + QUOTES.length) % QUOTES.length;
+  const step = 360 / LEG.length;
+  const front = ((i % LEG.length) + LEG.length) % LEG.length;
 
   const onTouchStart = (e) => {
     touchStart.current = e.touches[0].clientX;
@@ -374,53 +632,54 @@ export function Voices() {
   };
 
   return (
-    <section className="sec" id="voices" style={{ overflow: 'hidden' }}>
+    <section className="sec" id="single-leg" style={{ overflow: 'hidden' }}>
       <div className="wrap">
         <div className="sec-head" data-reveal="blur" style={{ marginInline: 'auto', textAlign: 'center', justifyItems: 'center' }}>
-          <span className="eyebrow">Customers</span>
-          <h2>Teams that moved to the edge</h2>
+          <span className="eyebrow">Single-Leg Income</span>
+          <h2>Single-Leg Income – Community Network</h2>
+          <p>The Single-Leg Income mechanism is designed around an interconnected upline and downline community structure. It connects members through a network-based distribution mechanism managed by the smart contract.</p>
         </div>
 
-        {/* Desktop 3D Ring Carousel (Untouched on Desktop) */}
+        {/* Desktop 3D Ring Carousel */}
         <div className="carousel" data-reveal="zoom" onPointerEnter={() => (paused.current = true)} onPointerLeave={() => (paused.current = false)}>
           <div className="car-ring" style={{ transform: `translateZ(calc(var(--R) * -1)) rotateY(${-i * step}deg)` }}>
-            {QUOTES.map((x, k) => (
+            {LEG.map((x, k) => (
               <figure key={k} className="quote" style={{ transform: `rotateY(${k * step}deg) translateZ(var(--R))`, opacity: front === k ? 1 : 0.45, margin: 0 }}>
-                <p>“{x[0]}”</p>
+                <p>{x[0]}</p>
                 <figcaption className="who">
-                  <span className="avatar">{x[1].split(' ').map((s) => s[0]).join('')}</span>
-                  <div><b>{x[1]}</b><span>{x[2]}</span></div>
+                  <span className="avatar">{x[2]}</span>
+                  <div><b>{x[1]}</b><span>Single-Leg Income</span></div>
                 </figcaption>
               </figure>
             ))}
           </div>
         </div>
 
-        {/* Mobile Swipeable Testimonial Card */}
+        {/* Mobile Swipeable Card */}
         <div
           className="mob-voice-card"
           onTouchStart={onTouchStart}
           onTouchEnd={onTouchEnd}
         >
           <div className="mob-voice-top">
-            <span className="mob-voice-stars">★★★★★</span>
-            <span className="mob-voice-tag">VERIFIED PRODUCTION TEAM</span>
+            <span className="mob-voice-stars">{LEG[front][2]}</span>
+            <span className="mob-voice-tag">SINGLE-LEG INCOME</span>
           </div>
-          <p className="mob-voice-quote">“{QUOTES[front][0]}”</p>
+          <p className="mob-voice-quote">{LEG[front][0]}</p>
           <div className="who">
-            <span className="avatar">{QUOTES[front][1].split(' ').map((s) => s[0]).join('')}</span>
+            <span className="avatar">{LEG[front][2]}</span>
             <div>
-              <b>{QUOTES[front][1]}</b>
-              <span>{QUOTES[front][2]}</span>
+              <b>{LEG[front][1]}</b>
+              <span>Single-Leg Income</span>
             </div>
           </div>
           <div className="mob-voice-dots">
-            {QUOTES.map((_, k) => (
+            {LEG.map((_, k) => (
               <button
                 key={k}
                 className={'mob-dot' + (front === k ? ' active' : '')}
                 onClick={() => setI(k)}
-                aria-label={`Testimonial ${k + 1}`}
+                aria-label={LEG[k][1]}
               />
             ))}
           </div>
@@ -434,22 +693,61 @@ export function Voices() {
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M9 6l6 6-6 6" /></svg>
           </button>
         </div>
+
+        <p className="tx-foot-note tx-center" data-reveal="up">Be part of an interconnected digital community built around participation and decentralised technology.</p>
       </div>
     </section>
   );
 }
 
-/* ---------- CTA + footer ---------- */
+/* ---------- FAQ ---------- */
+const FAQS = [
+  ['What is TitanX?', 'TitanX is a decentralised token project built around smart-contract technology, staking and a referral ecosystem.'],
+  ['How can I access TitanX?', 'You can access the ecosystem through a compatible digital wallet and the available DApp.'],
+  ['Which wallets are supported?', 'The project material mentions Trust Wallet, TokenPocket, SafePal and MetaMask.'],
+  ['Does TitanX have an open-buy mechanism?', 'No. Tokens are created through the joining mechanism rather than an open-buy mechanism.'],
+  ['What staking options are available?', 'TitanX provides Flexi and Regular staking options.'],
+  ['What income categories are available?', 'The ecosystem includes Staking Rewards, Direct Income, Rank Income, Unity Income and Single-Leg Income.'],
+  ['How does the referral programme work?', "Members can participate through referral connections according to the project's smart-contract rules."],
+  ['How does token burning work?', "Token burning operates through the smart contract according to the project's defined mechanism."],
+  ['How are income distributions managed?', 'Applicable income distributions follow the predefined smart-contract conditions.'],
+  ['Are withdrawals available?', 'Withdrawals are processed according to the applicable smart-contract rules.'],
+];
+
+export function Faq() {
+  return (
+    <section className="sec sec-tight" id="faq">
+      <div className="wrap">
+        <div className="sec-head faq-head">
+          <span className="eyebrow">FAQ</span>
+          <h2>Frequently Asked Questions</h2>
+          <p>Quick answers about the TitanX ecosystem.</p>
+        </div>
+        <div className="faq">
+          {FAQS.map((f, k) => (
+            <details key={k} className="faq-item">
+              <summary>{f[0]}</summary>
+              <p>{f[1]}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- closing CTA + footer ---------- */
 export function CTA() {
   return (
     <section className="sec" id="start" style={{ paddingBottom: 0 }}>
       <div className="wrap">
         <div className="cta" data-reveal="rise">
-          <span className="eyebrow">Get started</span>
-          <h2>Your users are everywhere. <span className="grad-text">Your app should be too.</span></h2>
-          <p>Deploy free in under a minute. No credit card, no regions to pick, no servers to babysit.</p>
+          <span className="eyebrow">TitanX · Rule the Digital Era</span>
+          <h2><span className="grad-text">Be Part of the TitanX Digital Revolution</span></h2>
+          <p>Explore a decentralised ecosystem built around smart-contract technology, token participation, staking and community connections. Discover TitanX and become part of its growing digital community.</p>
           <div className="cta-actions">
-            <Magnetic href="#top" className="btn btn-primary">Deploy now <Arrow /></Magnetic>
+            <Magnetic href="#overview" className="btn btn-primary">Explore TitanX <Arrow /></Magnetic>
+            <Magnetic href="#join" className="btn btn-ghost">Join the Community</Magnetic>
           </div>
         </div>
       </div>
@@ -459,9 +757,9 @@ export function CTA() {
 
 export function Footer() {
   const cols = [
-    ['Product', ['Edge Functions', 'Global KV', 'Image Pipeline', 'Observability']],
-    ['Developers', ['Documentation', 'CLI reference', 'Status', 'Changelog']],
-    ['Company', ['About', 'Careers', 'Security', 'Contact']],
+    ['Explore', [['Home', '#top'], ['About TitanX', '#overview'], ['Token Ecosystem', '#token']]],
+    ['Ecosystem', [['Staking', '#staking'], ['Income Opportunities', '#income'], ['Referral Programme', '#direct']]],
+    ['More', [['Smart Contract', '#contract'], ['Wallets', '#wallets'], ['FAQ', '#faq']]],
   ];
   return (
     <footer>
@@ -469,18 +767,18 @@ export function Footer() {
         <div className="foot">
           <div className="about">
             <a href="#top" className="brand"><img src="/images/Titanx.jpeg" alt="TitanX Logo" className="brand-logo" />TITANX</a>
-            <p>The edge cloud for teams who want every user to feel like they live next to the data centre.</p>
+            <p>Rule the Digital Era. A decentralised token ecosystem focused on smart-contract technology, staking opportunities, transparent token mechanisms and community participation.</p>
           </div>
           {cols.map(([h, l]) => (
             <div key={h}>
               <h4>{h}</h4>
-              <ul>{l.map((x) => <li key={x}><a href="#top">{x}</a></li>)}</ul>
+              <ul>{l.map(([t, href]) => <li key={t}><a href={href}>{t}</a></li>)}</ul>
             </div>
           ))}
         </div>
         <div className="foot-bottom">
-          <span className="status">All 310 cities operational</span>
-          <span>TitanX is a fictional brand created as a design concept. © 2026</span>
+          <span className="status">Building a transparent and community-driven digital ecosystem.</span>
+          <span>Presented by TitanX Team.</span>
         </div>
       </div>
     </footer>

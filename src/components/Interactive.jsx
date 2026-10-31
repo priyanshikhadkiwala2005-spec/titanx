@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { REDUCE, useInView } from '../lib/utils';
 
 /** Animated number that counts up when scrolled into view. */
-export function CountUp({ to, dec = 0, dur = 2000, suffix }) {
+export function CountUp({ to, dec = 0, dur = 2000, suffix, prefix }) {
   const ref = useRef(null);
   const seen = useInView(ref);
   const [v, setV] = useState(REDUCE ? to : 0);
@@ -20,6 +20,7 @@ export function CountUp({ to, dec = 0, dur = 2000, suffix }) {
   }, [seen]);
   return (
     <span ref={ref}>
+      {prefix}
       {v.toLocaleString('en-US', { minimumFractionDigits: dec, maximumFractionDigits: dec })}
       {suffix ? <small>{suffix}</small> : null}
     </span>
